@@ -17,7 +17,7 @@ import javax.annotation.Resource;
  */
 @RestController
 @Slf4j
-@DefaultProperties(defaultFallback = "payment_Global_FallbackMethod")
+@DefaultProperties(defaultFallback = "payment_Global_FallbackMethod")//配置默认的兜底方法
 public class OrderHystirxController
 {
     @Resource
@@ -26,6 +26,7 @@ public class OrderHystirxController
     @GetMapping("/consumer/payment/hystrix/ok/{id}")
     public String paymentInfo_OK(@PathVariable("id") Integer id)
     {
+
         String result = paymentHystrixService.paymentInfo_OK(id);
         return result;
     }
@@ -34,7 +35,7 @@ public class OrderHystirxController
     @HystrixCommand(fallbackMethod = "paymentTimeOutFallbackMethod",commandProperties = {
             @HystrixProperty(name="execution.isolation.thread.timeoutInMilliseconds",value="1500")
     })
-    //@HystrixCommand
+    //@HystrixCommand  //该注解表明这是一个兜底方方法
     public String paymentInfo_TimeOut(@PathVariable("id") Integer id)
     {
         int age = 10/0;

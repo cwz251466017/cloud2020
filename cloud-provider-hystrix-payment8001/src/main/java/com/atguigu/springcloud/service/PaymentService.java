@@ -26,6 +26,8 @@ public class PaymentService
         return "线程池:  "+Thread.currentThread().getName()+"  paymentInfo_OK,id:  "+id+"\t"+"O(∩_∩)O哈哈~";
     }
 
+    //服务降级
+    //超过5秒，进行降级
     @HystrixCommand(fallbackMethod = "paymentInfo_TimeOutHandler",commandProperties = {
             @HystrixProperty(name="execution.isolation.thread.timeoutInMilliseconds",value="5000")
     })
